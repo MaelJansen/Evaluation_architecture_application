@@ -18,6 +18,10 @@ const Operation = sequelize.define("Operation", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  imagePath: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = Operation;

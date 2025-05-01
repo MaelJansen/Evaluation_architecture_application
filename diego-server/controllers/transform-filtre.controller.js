@@ -8,7 +8,6 @@ async function transformImageFiltre(req, res) {
     res.set('Content-Type', 'image/png');
     res.send(resultBuffer);
   } catch (err) {
-    console.error('Error in Diego:', err);
     res.status(500).send('Error processing image');
   }
 };
