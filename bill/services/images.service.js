@@ -58,4 +58,25 @@ async function saveTransformation(image, parameters, pathTransform) {
     }
 }
 
-module.exports = { saveOperationAndSendImage };
+async function getImage(imageId, idUtilisateur) {
+    try {
+        const operation = await Operation.findOne({
+            where: { imageId, idUtilisateur}
+        });
+
+        if (operation) {
+            const absoluteImagePath = path.resolve(operation.imagePath);
+            const imageBuffer = fs.readFileSync(absoluteImagePath);
+           if (imageBuffer) {
+               return imageBuffer
+           }
+        }
+        throw new Error("error");
+    }catch (e) {
+        throw new Error('Error getting image')
+    }
+
+
+}
+
+module.exports = { saveOperationAndSendImage, getImage };

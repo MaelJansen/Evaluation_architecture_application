@@ -5,6 +5,6 @@ const {uploadImage} = require('../../utils/multer.config');
 const router = express.Router();
 
 router.post("/:imageId/:idUtilisateur/transforms", uploadImage.single('image'), saveOperation);
-router.get("/:imageId/generate-modification", applyOperation);
+router.get("/:imageId/:idUtilisateur/modification", applyOperation);
 
 module.exports = router;
