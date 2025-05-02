@@ -12,12 +12,12 @@ const saveOperation = async (req, res) => {
   const imagePath = req.file.path;
 
   const image = await saveOperationAndSendImage({...req.body, imagePath, imageId});
-
   if (!image) {
     return res.status(401).json({ message: "Image not found" });
   }
-
-  return res.status(200).json({ image });
+  res.set('Content-Type', 'image/png');
+  res.status(200)
+  return res.send(image);
 
 };
 

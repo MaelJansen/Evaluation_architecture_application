@@ -4,10 +4,7 @@ const allowedActions = ['blur', 'sharpen', 'grayscale', 'negate'];
 
 async function applyTransformationsFiltre (buffer, transformations) {
   let image = sharp(buffer);
-  console.log(transformations)
-  console.log(transformations)
-  const transformationObj = JSON.parse(transformations.transformations);
-  const action = transformationObj.action;
+  const action = transformations.action;
 
   if (!allowedActions.includes(action)) {
     throw new Error(`Invalid action '${transformations.action}'. Allowed actions are: ${allowedActions.join(', ')}`);
