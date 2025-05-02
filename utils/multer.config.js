@@ -8,8 +8,10 @@ const storageImage = multer.diskStorage({
     cb(null, path.join(__dirname, '../uploads'));
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+    const nameFile = file.originalname.split('.')
+    const imageId = req.params.imageId;
+    const userId = req.params.idUtilisateur;
+    cb(null, imageId  + "-" + userId + "-" + nameFile[0] + path.extname(file.originalname));
   },
 });
 

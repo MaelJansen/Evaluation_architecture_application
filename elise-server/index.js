@@ -6,6 +6,7 @@ const app = express();
 
 const transformRoutes = require('./routes/transform-effet.routes');
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/effet', transformRoutes);
 

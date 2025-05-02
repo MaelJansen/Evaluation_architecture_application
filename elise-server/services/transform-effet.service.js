@@ -1,46 +1,56 @@
 const sharp = require('sharp');
 
+const allowedActions = ['rotate', 'ecrasement', 'mirror', 'kaleidoscope'];
+
 async function applyEffects(buffer, effects) {
     let image = sharp(buffer);
+    const action = effects.action;
 
-    for (const e of effects) {
-        if (e.type === 'effet') {
-            switch (e.action) {
-                case 'rotate':
-                    const angle = e.angle;
-                    if (!angle) {
-                        throw new Error('Angle is required for rotate effect');
-                    }
-                    image = image.rotate(angle);
-                    break;
-                case 'ecrasement':
-                    const width = e.width || null;
-                    const height = e.height || null;
-                    image = image.resize(width, height);
-                    break;
-                case 'mirror':
-                    if (e.direction === 'horizontal') {
-                        image = image.flop();
-                    } else if (e.direction === 'vertical') {
-                        image = image.flip();
-                    }
-                    break;
-                case 'kaleidoscope':
-                    image = await image
-                        .resize(200, 200)
-                        .flop()
-                        .flip()
-                        .rotate(90)
-                        .toBuffer();
-                    image = sharp(image).flop().flip();
-                    break;
-                default:
-                    throw new Error(`Unknown effect: ${e.action}`);
-            }
-        }
+    if (!allowedActions.includes(action)) {
+        throw new Error(`Invalid action '${action}'. Allowed actions are: ${allowedActions.join(', ')}`);
     }
 
-    return image.toBuffer();
+    if (effects.type !== 'effet') {
+        throw new Error(`Invalid type '${effects.type}'. Only 'filter' is allowed`);
+    }
+
+    try {
+        switch (action) {
+            case 'rotate':
+                const angle = effects.angle;
+                if (!angle) {
+                    throw new Error('Angle is required for rotate effect');
+                }
+                image = image.rotate(angle);
+                break;
+            case 'ecrasement':
+                const width = effects.width || null;
+                const height = effects.height || null;
+                image = image.resize(width, height);
+                break;
+            case 'mirror':
+                if (effects.direction === 'horizontal') {
+                    image = image.flop();
+                } else if (effects.direction === 'vertical') {
+                    image = image.flip();
+                }
+                break;
+            case 'kaleidoscope':
+                image = await image
+                    .resize(200, 200)
+                    .flop()
+                    .flip()
+                    .rotate(90)
+                    .toBuffer();
+                image = sharp(image).flop().flip();
+                break;
+        }
+
+        return image.toBuffer();
+
+    } catch (e) {
+        throw new Error("Error to set effet");
+    }
 }
 
 module.exports = applyEffects;

@@ -7,7 +7,7 @@ async function applyTransformationsFiltre (buffer, transformations) {
   const action = transformations.action;
 
   if (!allowedActions.includes(action)) {
-    throw new Error(`Invalid action '${transformations.action}'. Allowed actions are: ${allowedActions.join(', ')}`);
+    throw new Error(`Invalid action '${action}'. Allowed actions are: ${allowedActions.join(', ')}`);
   }
 
   if (transformations.type !== 'filtre') {
