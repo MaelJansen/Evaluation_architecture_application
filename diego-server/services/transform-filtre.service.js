@@ -31,6 +31,6 @@ async function applyTransformationsFiltre (buffer, transformations) {
     throw new Error("Error to set filter");
   }
 
-};
+}
 
 module.exports = applyTransformationsFiltre;

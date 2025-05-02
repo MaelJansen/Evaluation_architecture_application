@@ -53,7 +53,7 @@ const applyOperation = async (req, res) => {
       image: image,
     };
 
-    const imageModifiee = await fecth("http://localhost:" + (operation.type == "filtre" ? PORTDIEGO : PORTELISE) + "/images/" + imageId + "/transform", {
+    const imageModifiee = await fecth("http://localhost:" + (operation.type === "filtre" ? PORTDIEGO : PORTELISE) + "/images/" + imageId + "/transform", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
